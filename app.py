@@ -4,7 +4,8 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 
-labels = 'Postive', 'Negative', 'Neutral'
+la = ['Negative', 'Positive', 'Neutral']
+label=list(la)
 
 st.title("Personality Identifier")
 
@@ -15,7 +16,7 @@ name="%20".join(name)
 
 name="&q="+name
 
-url="https://newsdata.io/api/2/news?apikey=pub_14912d9a2a9ade17902f701bc34c4cab428e1&language=en"
+url="https://newsdata.io/api/1/news?apikey=pub_191729a7504a7dfeda92f5d160ab32d8bc375&language=en"
 
 url=url+name
 response=requests.get(url)
@@ -56,17 +57,17 @@ else:
         neutral_per=sum(neutral)*10
         rem=100-(negative_per+positive_per+neutral_per)
         st.write("The person is {}% negative".format(negative_per))
-        st.write("The person is {}% postive".format(positive_per))
+        st.write("The person is {}% positive".format(positive_per))
         st.write("The person is {}% neutral".format(neutral_per))
-        st.write("{}% is compound news")
+        st.write("{}% is compound news".format(rem))
         sizes=[]
         sizes.append(negative_per)
         sizes.append(positive_per)
         sizes.append(neutral_per)
-        sizes.append(rem)
+        # sizes.append(rem)
+    
         fig1, ax1 = plt.subplots()
-        ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
-        shadow=True, startangle=90)
-        ax1.axis('equal')
+        ax1.pie(sizes, labels=label, autopct='%1.1f%%', wedgeprops={'alpha':0.5})
+        # ax1.axis('equal')
+        fig1.set_facecolor('grey')
         st.pyplot(fig1)
-
